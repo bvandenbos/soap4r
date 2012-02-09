@@ -34,10 +34,11 @@ public
   attr_accessor :generate_explicit_type
   attr_accessor :use_default_namespace
   attr_accessor :return_response_as_xml
+  attr_accessor :http_headers
   attr_reader :headerhandler
   attr_reader :filterchain
   attr_reader :streamhandler
-
+  
   attr_accessor :mapping_registry
   attr_accessor :literal_mapping_registry
 
@@ -57,6 +58,7 @@ public
     @allow_unqualified_element = true
     @default_encodingstyle = nil
     @generate_explicit_type = nil
+    @http_headers = nil
     @use_default_namespace = false
     @return_response_as_xml = false
     @headerhandler = Header::HandlerSet.new
@@ -133,7 +135,8 @@ public
       :default_encodingstyle =>
         @default_encodingstyle || op_info.request_default_encodingstyle,
       :use_default_namespace =>
-        op_info.use_default_namespace || @use_default_namespace
+        op_info.use_default_namespace || @use_default_namespace,
+      :http_headers =>  @http_headers
     )
     resopt = create_encoding_opt(
       :envelopenamespace => @options["soap.envelope.responsenamespace"],
@@ -172,6 +175,9 @@ public
     end
     reqopt[:external_content] = nil
     conn_data = marshal(req_env, reqopt)
+    if reqopt[:http_headers].present?
+      conn_data.extheaders = reqopt[:http_headers]
+    end
     if ext = reqopt[:external_content]
       mime = MIMEMessage.new
       ext.each do |k, v|
@@ -303,6 +309,7 @@ private
     opt[:default_encodingstyle] = @default_encodingstyle
     opt[:allow_unqualified_element] = @allow_unqualified_element
     opt[:generate_explicit_type] = @generate_explicit_type
+    opt[:http_headers] = @http_headers
     opt[:no_indent] = @options["soap.envelope.no_indent"]
     opt[:use_numeric_character_reference] =
       @options["soap.envelope.use_numeric_character_reference"]

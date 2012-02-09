@@ -3,10 +3,10 @@
 
 require 'rubygems'
 SPEC = Gem::Specification.new do |s|
-  s.name = "mumboe-soap4r"
-  s.version = "1.5.8.3"
+  s.name = "bvandenbos-soap4r"
+  s.version = "1.5.8.4"
   s.date = "2009-12-08"
-  s.author = "Scott Diedrick (modifier: swalterd)"
+  s.author = "Scott Diedrick (modifier: swalterd, bvandenbos)"
   s.email = "swalterd@gmail.com"
   s.homepage = "http://dev.ctor.org/soap4r"
   s.platform = Gem::Platform::RUBY

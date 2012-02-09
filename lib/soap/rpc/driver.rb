@@ -179,6 +179,9 @@ private
     opt.add_hook("protocol.mandatorycharset") do |key, value|
       @proxy.mandatorycharset = value
     end
+    opt.add_hook("protocol.http_custom_headers") do |key, value|
+      @proxy.http_headers = value
+    end
     opt.add_hook("protocol.wiredump_file_base") do |key, value|
       @wiredump_file_base = value
     end

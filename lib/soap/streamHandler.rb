@@ -33,6 +33,7 @@ class StreamHandler
     attr_accessor :is_fault
     attr_accessor :is_nocontent
     attr_accessor :soapaction
+    attr_accessor :extheaders
 
     def initialize(send_string = nil)
       @send_string = send_string
@@ -42,6 +43,7 @@ class StreamHandler
       @is_fault = false
       @is_nocontent = false
       @soapaction = nil
+      @extheaders = nil
     end
   end
 
@@ -229,6 +231,13 @@ private
     extheader['Content-Type'] = conn_data.send_contenttype
     extheader['SOAPAction'] = "\"#{ conn_data.soapaction }\""
     extheader['Accept-Encoding'] = 'gzip' if send_accept_encoding_gzip?
+    
+    if conn_data.extheaders.present?
+      conn_data.extheaders.each do |key, value|
+        extheader[key] = value
+      end
+    end
+    
     send_string = conn_data.send_string
     @wiredump_dev << "Wire dump:\n\n" if @wiredump_dev
     begin
