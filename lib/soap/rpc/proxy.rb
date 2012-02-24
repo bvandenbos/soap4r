@@ -175,7 +175,7 @@ public
     end
     reqopt[:external_content] = nil
     conn_data = marshal(req_env, reqopt)
-    if reqopt[:http_headers].present?
+    if !reqopt[:http_headers].nil? && !reqopt[:http_headers].empty?
       conn_data.extheaders = reqopt[:http_headers]
     end
     if ext = reqopt[:external_content]
