@@ -232,7 +232,7 @@ private
     extheader['SOAPAction'] = "\"#{ conn_data.soapaction }\""
     extheader['Accept-Encoding'] = 'gzip' if send_accept_encoding_gzip?
     
-    if conn_data.extheaders.present?
+    if !conn_data.extheaders.nil?
       conn_data.extheaders.each do |key, value|
         extheader[key] = value
       end
